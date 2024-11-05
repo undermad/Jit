@@ -1,12 +1,15 @@
 package org.example;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 
-public class FileTreeRenderer
-{
+public class FileTreeRenderer {
 
-    public static void printFileTree(String path, int depth, boolean last)
-    {
+    public static void printFileTree(String path, int depth, boolean last) {
         File file = new File(path);
         File[] files = file.listFiles();
 
@@ -29,8 +32,7 @@ public class FileTreeRenderer
         }
     }
 
-    private static File[] orderDirToFiles(File[] files)
-    {
+    private static File[] orderDirToFiles(File[] files) {
         var sortedFiles = new File[files.length];
 
         int j = 0;
@@ -52,13 +54,26 @@ public class FileTreeRenderer
     }
 
 
-    private static String addFileArrow(int depth)
-    {
+    private static String addFileArrow(int depth) {
         return "│  ".repeat(Math.max(0, depth)) + "├─ ";
     }
 
-    private static String addLastFileArrow(int depth)
-    {
+    private static String addLastFileArrow(int depth) {
         return "│  ".repeat(Math.max(0, depth)) + "└─ ";
+    }
+
+    public static class SimpleVisitor extends SimpleFileVisitor<Path> {
+
+        @Override
+        public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+
+            return super.preVisitDirectory(dir, attrs);
+        }
+
+        @Override
+        public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+
+            return super.visitFile(file, attrs);
+        }
     }
 }
