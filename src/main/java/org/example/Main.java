@@ -11,7 +11,19 @@ public class Main {
     public static void main(String[] args) throws IOException {
         Path path = Path.of(".\\.jit");
         Initializer.init(path);
+//        performDummySerialization();
 
+
+        var tree = DirectoryManager.buildDirectoryTree(Path.of("."));
+
+
+        System.out.println(tree);
+
+
+
+    }
+
+    public static void performDummySerialization() {
         Path filePath = Path.of(".\\src\\main\\java\\org\\example\\Dummy.java");
         Path compressedFilePath = Path.of(".\\.jit\\objects\\dummyV1.bin");
 

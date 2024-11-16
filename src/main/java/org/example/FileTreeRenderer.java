@@ -67,13 +67,29 @@ public class FileTreeRenderer {
         @Override
         public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
 
+
             return super.preVisitDirectory(dir, attrs);
         }
 
         @Override
         public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-
+            System.out.println(file.getFileName());
             return super.visitFile(file, attrs);
         }
+
+        @Override
+        public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
+            return super.visitFileFailed(file, exc);
+        }
+
+        @Override
+        public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+            return super.postVisitDirectory(dir, exc);
+        }
+
+
     }
+
+
+
 }
