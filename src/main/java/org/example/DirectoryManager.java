@@ -1,10 +1,13 @@
 package org.example;
 
-import java.io.File;
+import java.io.*;
 import java.nio.file.Path;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class DirectoryManager {
 
+    private static FileHasher fileHasher = FileHasher.getInstance();
 
     public static void reconstructDirectoryTree(TreeNode tree, Path targetPath) {
         var file = targetPath.toFile();
@@ -12,11 +15,6 @@ public class DirectoryManager {
         if (!file.isDirectory()) {
             return;
         }
-
-
-
-
-
 
 
     }
@@ -27,12 +25,16 @@ public class DirectoryManager {
     }
 
     private static TreeNode buildTree(File file) {
-        TreeNode fileTree = new TreeNode(file.getName(), file.isDirectory());
+
+        TreeNode fileTree;
 
         if (file.isFile()) {
+            var hashedFileName = fileHasher.hashContent(file);
+            fileTree = new TreeNode(hashedFileName, file.isDirectory());
             return fileTree;
         }
 
+        fileTree = new TreeNode(file.getName(), file.isDirectory());
         var children = file.listFiles();
         if (children != null) {
             for (File child : children) {
